@@ -1,0 +1,46 @@
+<ion-view cache-view="false" view-title="Confirm Pick Up">
+	<ion-content>
+		<!-- <form name="dispatchForm" ng-submit="confirmdispatch()"> -->
+			<form name="pick_form">
+				<div class="card customcard">
+					<div class="item item-divider">
+					    Selected AWBs
+					</div>
+					<a class="item" ng-repeat="b in selected">
+					    <strong>{{b.awb_num}}</strong>
+					    <p> {{b.origin_addr}} - {{b.dest_addr}} </p>
+					</a>
+					<div class="item item-divider">
+					    Sender Name and Password
+					</div>
+					<label class="item item-input">
+	                    <span class="input-label formfont"><i class="iconsize ion-person"> </i>Sender Name</span>
+	                    <input type="text" ng-model="sender_name" disabled>
+	                </label>
+					
+	                <span ng-show="pick_form.sender_pass.$invalid && !pick_form.sender_pass.$pristine" style="color:red">Please a password</span>
+	                <label class="item item-input">
+                        <span class="input-label formfont"><i class=" iconsize ion-ios-paper-outline"> </i>Notes</span>
+                        <textarea ng-model="notes" name="notes"></textarea>
+                    </label>
+					<div class="list">
+	                    <div class="item item-divider">
+					    	Sender Signature
+					  </div>
+
+	                    <center>
+	                    	<div class="container">
+					            <signature-pad height="300" width="350" dataurl="dataurl"></signature-pad>
+					        </div>
+						</center>
+					</div>
+				</div>
+			</form>
+			<center>
+				<button class="button button-block bstyle button-energized" ng-click="clearsign()">Clear Signature</button>
+				<button class="button button-block bstyle button-positive" ng-click="confirmpick(pick_form.$valid)" ng-disabled="isDisabled">Confirm Pickup</button>
+				<button class="button button-block bstyle button-assertive" ng-click="cancel()">Cancel</button>
+			</center><br>
+		<!-- </form> -->
+	</ion-content>
+</ion-view>

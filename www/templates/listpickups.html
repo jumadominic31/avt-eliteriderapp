@@ -1,0 +1,27 @@
+<ion-view cache-view="false" view-title="Parcels to be Picked">
+    <ion-nav-buttons side="right">
+        <button class="button button-clear icon-left ion-home" ng-click="cancel()"></button>
+    </ion-nav-buttons>
+    <ion-content class="padding bg">
+        
+        <center><ion-spinner icon="android" ng-show="loading"></ion-spinner></center>
+        <div class="list card">
+            <a class="item" ng-show="notfound">
+                <center><h3>No pending pickups</h3></center>
+            </a>
+            <div class="item item-divider" ng-hide="notfound">
+                Parcels pending pickups
+            </div>
+            <ul class="list">
+                <li class="item"  ng-if="dataLoaded" ng-repeat="b in listbooked track by $index">
+                    <strong>{{ b.awb_num }}</strong>
+                    <div class="item-text-wrap">{{b.origin_addr}} -> {{b.dest_addr}} </div>
+                    <div class="item-text-wrap">{{b.sender_company_name}}: {{b.sender_name}} </div>
+                </li>
+            </ul>
+        </div>
+        <center>
+            <button class="button button-block bstyle button-assertive" ng-click="cancel()">Back</button>
+        </center><br>
+    </ion-content>
+</ion-view>

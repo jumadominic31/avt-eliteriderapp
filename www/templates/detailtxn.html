@@ -1,0 +1,129 @@
+<ion-view cache-view="false" view-title="Parcel AWB Summary">
+    <ion-nav-buttons side="right">
+        <button class="button button-clear icon-left ion-home" ng-click="cancel()"></button>
+    </ion-nav-buttons>
+    <ion-content>
+        <center><ion-spinner icon="android" ng-show="loading"></ion-spinner></center>
+        <div class="list card">
+            <div class="list">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Enter AWB No.</span>
+                    <input type="text" ng-model="awb_num">
+                </label>
+                <button class="button button-block bstyle button-positive" ng-click="search_awb()" ng-disabled="isDisabled">Search</button>
+            </div>
+            <a class="item" ng-show="notfound">
+                    <center><h3>AWB not found! Please try again.</h3></center>
+            </a>
+            <div class="list" ng-if="dataLoaded">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label input-span-width">Company Name</span>
+                    <input type="text" ng-model="companyname" ng-disabled="true">
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label input-span-width">Company Address</span>
+                    <input type="text" ng-model="companyaddr" ng-disabled="true">
+                </label>
+                <label class="item item-input">
+                    <angular-barcode ng-model="awb_num" bc-options="bc" bc-class="barcode" bc-type="svg"></angular-barcode>
+                </label>
+                <label class="item item-input">
+                    <span class="input-label input-span-width">AWB Number</span>
+                    <input type="text" ng-model="awb_num" ng-disabled="true">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label input-span-width">Origin</span>
+                    <input type="text" ng-model="origin_addr" ng-disabled="true">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label input-span-width">Destination</span>
+                    <input type="text" ng-model="dest_addr" ng-disabled="true">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label input-span-width">Booking mode</span>
+                    <input type="text" ng-model="bkmode_name" ng-disabled="true">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label input-span-width">Round Trip</span>
+                    <input type="text" ng-model="roundtrip_name" ng-disabled="true">
+                </label>
+                <div class="item item-divider">
+                    Parcel Details
+                </div>
+                <label class="item item-input">
+                    <span class="input-label input-span-width">Parcel Type</span>
+                    <input type="text" ng-model="parcel_type_name" ng-disabled="true">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label input-span-width">Description</span>
+                    <input type="text" ng-model="parcel_desc" ng-disabled="true">
+                </label>
+                <!-- <label class="item item-input">
+                    <span class="input-label input-span-width">Price (KShs)</span>
+                    <input type="text" ng-model="price" ng-disabled="true">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label input-span-width">VAT (KShs)</span>
+                    <input type="text" ng-model="vat" ng-disabled="true">
+                </label> -->
+                <div class="item item-divider">
+                    Sender Details
+                </div>
+                <label class="item item-input">
+                    <span class="input-label input-span-width">Name</span>
+                    <input type="text" ng-model="sender_name" ng-disabled="true">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Company</span>
+                    <input type="text" ng-model="sender_company_name" ng-disabled="true">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label input-span-width">Phone</span>
+                    <input type="text" ng-model="sender_phone" ng-disabled="true">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label input-span-width">ID Num</span>
+                    <input type="text" ng-model="sender_id_num" ng-disabled="true">
+                </label>
+                <!-- <div class="item item-image">
+                    <img src="{{sender_sign}}" style="width: 40%; height: 40%" >
+                </div> -->
+                <div class="item item-divider">
+                    Receiver Details
+                </div>
+                <label class="item item-input">
+                    <span class="input-label input-span-width">Name</span>
+                    <input type="text" ng-model="receiver_name" ng-disabled="true">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Company</span>
+                    <input type="text" ng-model="receiver_company_name" ng-disabled="true">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label input-span-width">Phone</span>
+                    <input type="text" ng-model="receiver_phone" ng-disabled="true">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label input-span-width">ID Num</span>
+                    <input type="text" ng-model="receiver_id_num" ng-disabled="true">
+                </label>
+                <div class="item item-divider">
+                    Shipment Details
+                </div>
+                <label class="item item-input">
+                    <span class="input-label input-span-width">Shipment Status</span>
+                    <input type="text" ng-model="parcel_status_name" ng-disabled="true">
+                </label>
+                <a class="item" ng-repeat="s in statusdetails track by $index" >
+                    {{$index + 1}}: {{s.updated_at}} - {{s.status_name}}
+                </a>
+                <center>
+                    <button class="button button-block bstyle button-positive" ng-click="caller()" ng-disabled = "isDisabled"><i class="ion-printer">{{printer}}</i></button>
+                    <button class="button button-block bstyle button-assertive" ng-click="reset()">Reset</button>
+                </center><br>
+            </div>
+
+        </div>
+
+    </ion-content>
+</ion-view>

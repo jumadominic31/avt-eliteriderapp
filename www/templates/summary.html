@@ -1,0 +1,33 @@
+<ion-view cache-view="false" view-title="Day Summary">
+    <ion-content>
+    	 <div class="list" >
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">Company Name</span>
+                <input type="text" ng-model="companyname" ng-disabled="true">
+            </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">Company Address</span>
+                <input type="text" ng-model="companyaddr" ng-disabled="true">
+            </label>
+            <div class="item item-divider">
+                Parcels Delivery Data
+            </div>
+            <label class="item item-input">
+                <span class="input-label" style="width:200px">Parcels booked</span>
+                <input type="text" ng-model="booked" ng-disabled="true">
+            </label>
+            <label class="item item-input">
+                <span class="input-label" style="width:200px">Parcels picked</span>
+                <input type="text" ng-model="picked" ng-disabled="true">
+            </label>
+            <label class="item item-input">
+                <span class="input-label" style="width:200px">Parcels received</span>
+                <input type="text" ng-model="received" ng-disabled="true">
+            </label>
+        </div>
+        <center>
+            <button class="button button-block bstyle button-positive" ng-click="print()"><i class="ion-printer"> {{printer}}</i></button>
+            <button class="button button-block bstyle button-assertive" ng-click="cancel()">Home</button>
+        </center><br>
+    </ion-content>
+</ion-view>

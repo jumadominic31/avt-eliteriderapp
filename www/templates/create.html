@@ -1,0 +1,122 @@
+<ion-view cache-view="false" view-title="Parcel Pick Up">
+    <ion-content class="padding bg">
+        <form name="create_form">
+            <div class="card customcard">
+                <div class="list">
+                	<div class="item item-divider">
+                        Origin and Destination
+                    </div>
+                    <label class="item item-input">
+                        <span class="input-label formfont"><i class="iconsize ion-ios-location"> </i>From</span>
+                        <input type="text" ng-model="origin_addr" name="origin_addr" required>
+                    </label>
+                    <span ng-show="create_form.origin_addr.$invalid && !create_form.origin_addr.$pristine" style="color:red">Required!</span>
+                    <label class="item item-input">
+                        <span class="input-label formfont"><i class=" iconsize ion-ios-location-outline"> </i>To</span>
+                        <input type="text" ng-model="dest_addr" name="dest_addr" required>
+                    </label>
+                    <span ng-show="create_form.dest_addr.$invalid && !create_form.dest_addr.$pristine" style="color:red">Required!</span>
+                    <!-- Sender Details -->
+                    <div class="item item-divider">
+                        Sender Details
+                    </div>
+                    <label class="item item-input">
+                        <span class="input-label formfont"><i class="iconsize ion-ios-contact"> </i>Name</span>
+                        <input type="text" ng-model="sender_name" name="sender_name" ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 }}" required>
+                    </label>
+                    <span ng-show="create_form.sender_name.$invalid && !create_form.sender_name.$pristine" style="color:red">Required!</span>
+                    
+
+                    <li class="item item-toggle">
+                        Enter or Choose Company:
+                        <label class="toggle toggle-stable">
+                            <input type="checkbox" ng-model="myVar" ng-init="myVar = false">
+                            <div class="track">
+                                <div class="handle"></div>
+                            </div>
+                        </label>
+                    </li>
+
+                    <label class="item item-input item-select" ng-show="!myVar">
+                    <!-- <label class="item item-input item-select"> -->
+                        <span class="input-label formfont"><i class="iconsize ion-ios-contact"> </i>Company</span>
+                        <ion-spinner icon="dots" class="spinerdot" ng-show="spinner1"></ion-spinner>
+                        <div ng-repeat="(id, name) in customers track by $index"></div>
+                        <select ng-model="sender_company" ng-options="customer as customer.name for customer in customers"></select>
+                    </label>
+                    <label class="item item-input" ng-show="myVar">
+                        <span class="input-label formfont"><i class="iconsize ion-ios-contact"> </i>Company</span>
+                        <input type="text" ng-model="sender_company_name_wr" name="sender_company_name_wr">
+                    </label>
+                    
+                    <label class="item item-input">
+                        <span class="input-label formfont"><i class="iconsize ion-ios-telephone"> </i>Phone +254</span>
+                        <input type="number" ng-model="sender_phone" name="sender_phone" ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 }}" ng-pattern="phone_check" placeholder="700000000" required>
+                    </label>
+                    <!-- <span ng-show="create_form.sender_phone.$error.pattern" style="color:red">Please enter correct phone number</span>-->
+                    <span ng-show="create_form.sender_phone.$invalid && !create_form.sender_phone.$pristine" style="color:red">Please enter correct phone number</span>
+                    <label class="item item-input">
+                        <span class="input-label formfont"><i class="iconsize ion-document-text"> </i>ID Num</span>
+                        <input type="number" ng-model="sender_id_num">
+                    </label>
+                    <span ng-show="create_form.dest.$invalid && !create_form.dest.$pristine" style="color:red">Required!</span>
+                    <!-- Receiver Details -->
+                    <div class="item item-divider">
+                        Receiver Details
+                    </div>
+                    
+                    <label class="item item-input">
+                        <span class="input-label formfont"><i class="iconsize ion-ios-contact-outline"> </i>Name</span>
+                        <input type="text" ng-model="receiver_name" name="receiver_name" ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 }}"required>
+                    </label>
+                    <span ng-show="create_form.receiver_name.$invalid && !create_form.receiver_name.$pristine" style="color:red">Required!</span>
+                    <label class="item item-input">
+                        <span class="input-label formfont"><i class="iconsize ion-ios-contact"> </i>Company</span>
+                        <input type="text" ng-model="receiver_company_name" name="receiver_company_name" required>
+                    </label>
+                    <span ng-show="create_form.receiver_company_name.$invalid && !create_form.receiver_company_name.$pristine" style="color:red">Required!</span>
+                    <label class="item item-input">
+                        <span class="input-label formfont"><i class="iconsize ion-ios-telephone-outline"> </i>Phone +254</span>
+                        <input type="number" ng-model="receiver_phone" name="receiver_phone" ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 }}" ng-pattern="phone_check" placeholder="700000000" required>
+                    </label>
+                    <span ng-show="create_form.receiver_phone.$invalid && !create_form.receiver_phone.$pristine" style="color:red">Please enter correct phone number</span>
+                    <!-- Parcel Details -->
+                    <div class="item item-divider">
+                        Parcel Details
+                    </div>
+                    <label class="item item-input item-select">
+                        <span class="input-label formfont"><i class=" iconsize ion-ios-box-outline"> </i>Parcel Type</span>
+                        <ion-spinner icon="dots" class="spinerdot" ng-show="spinner2"></ion-spinner>
+                        <div ng-repeat="(id,name) in parceltypes track by $index"></div>
+                        <select ng-model="parcel_type" ng-options="parceltype as parceltype.name for parceltype in parceltypes" required></select>
+                    </label>
+                    <span ng-show="create_form.parcel_type.$invalid && !create_form.parcel_type.$pristine" style="color:red">Required!</span>
+                    <label class="item item-input">
+                        <span class="input-label formfont"><i class=" iconsize ion-ios-paper-outline"> </i>Description</span>
+                        <input type="text" ng-model="parcel_desc" name="parcel_desc">
+                    </label>
+                    <label class="item item-input item-select">
+                        <span class="input-label formfont"><i class=" iconsize ion-ios-box-outline"> </i>Booking Mode</span>
+                        <div ng-repeat="(id,name) in bkmodes track by $index"></div>
+                        <select ng-model="bkmode" ng-options="bkmode as bkmode.name for bkmode in bkmodes" required></select>
+                    </label>
+                    <span ng-show="create_form.bkmode.$invalid && !create_form.bkmode.$pristine" style="color:red">Required!</span>
+                    <label class="item item-input item-select">
+                        <span class="input-label formfont"><i class=" iconsize ion-ios-box-outline"> </i>Round Trip</span>
+                        <div ng-repeat="(id,name) in roundtrips track by $index"></div>
+                        <select ng-model="roundtrip" ng-options="roundtrip as roundtrip.name for roundtrip in roundtrips" required></select>
+                    </label>
+                    <span ng-show="create_form.roundtrip.$invalid && !create_form.roundtrip.$pristine" style="color:red">Required!</span>
+                    <!-- need to get price automatically -->
+                    <!-- <label class="item item-input">
+                        <span class="input-label formfont"><i class=" iconsize ion-cash"> </i>Price</span>
+                        <input type="number" ng-model="price" name="price" ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 }}" disabled>
+                    </label> -->
+
+                </div>
+            </div>
+        </form>
+        <center> <button class="button  bstyle button-positive" ng-click="createtxn(create_form.$valid)" ng-disabled="isDisabled" >Pick Parcel</button></center><br>
+
+    </ion-content>
+</ion-view>

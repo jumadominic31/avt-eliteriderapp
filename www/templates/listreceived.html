@@ -1,0 +1,29 @@
+<ion-view cache-view="false" view-title="Parcels Received">
+    <ion-nav-buttons side="right">
+        <button class="button button-clear icon-left ion-home" ng-click="cancel()"></button>
+    </ion-nav-buttons>
+    <ion-content class="padding bg">
+        <label class="item item-input item-select">
+            <span class="input-label formfont"><i class="iconsize ion-ios-contact"> </i>Company</span>
+            <div ng-repeat="(id, name) in customers track by $index"></div>
+            <select ng-model="sender_company" ng-options="customer as customer.name for customer in customers" ng-change="listreceivedfun(sender_company.id)" required></select>
+        </label>
+        <center><ion-spinner icon="android" ng-show="loading"></ion-spinner></center>
+        <div class="list card">
+            <a class="item" ng-show="notfound">
+                <center><h3>No received parcels</h3></center>
+            </a>
+            <div class="item item-divider" ng-hide="notfound">
+                Received parcels
+            </div>
+            <a class="item item-icon-left" ng-if="dataLoaded"  ng-repeat="b in listreceived track by $index" >
+                <i class="icon ion-ios-box-outline"></i>
+                <strong>{{ b.awb_num }}</strong>
+                <div class="item-text-wrap">Receiver: {{b.receiver_name}} of {{b.receiver_company_name}}</div>
+            </a>
+        </div>
+        <center>
+            <button class="button button-block bstyle button-positive" ng-click="cancel()">Back</button>
+        </center><br>
+    </ion-content>
+</ion-view>

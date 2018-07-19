@@ -1,0 +1,28 @@
+<ion-view cache-view="false" view-title="Parcels dispatched to Receiver">
+    <ion-nav-buttons side="right">
+        <button class="button button-clear icon-left ion-home" ng-click="cancel()"></button>
+    </ion-nav-buttons>
+    <ion-content class="padding bg">
+       <center><ion-spinner icon="android" ng-show="loading"></ion-spinner></center>
+        <div class="list card">
+            <a class="item" ng-show="notfound">
+                <center><h3>No picked up parcels</h3></center>
+            </a>
+            <div class="item item-divider" ng-hide="notfound">
+                Picked Up Parcels
+            </div>
+            <ion-list>
+                <ion-radio ng-if="dataLoaded" ng-repeat="b in listpicked" ng-model="selected" ng-value="" ng-change="selectItem(b)" name="select-awb">
+                    <strong>{{ b.awb_num }}</strong>
+                    <div class="item-text-wrap">Receiver: {{b.receiver_name}} </div>
+                    <div class="item-text-wrap">Destination: {{b.dest_addr}}</div>
+                </ion-radio>
+
+            </ion-list>
+         </div>
+            <center>
+                <button class="button button-block bstyle button-positive" ng-click="receive()" ng-disabled = "isDisabled" >Receive Parcel</button>
+                <button class="button button-block bstyle button-assertive" ng-click="cancel()">Cancel</button>
+            </center><br>
+    </ion-content>
+</ion-view>

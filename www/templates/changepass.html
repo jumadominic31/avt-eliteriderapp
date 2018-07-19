@@ -1,0 +1,23 @@
+<ion-view cache-view="false" view-title="Change Password">
+    <ion-content class="padding bg">
+        <form ng-submit="changepass()">
+            <div class="card customcard">
+                <div class="list">
+                    <label class="item item-input item-stacked-label">
+                        <span class="input-label formfont">Current Password: </span>
+                        <input type="password" ng-model="curr_password" placeholder="Current Password" >
+                    </label>
+                    <label class="item item-input item-stacked-label">
+                        <span class="input-label formfont">New Password: </span>
+                        <input type="password" ng-model="new_password" placeholder="New Password" >
+                    </label>
+                    <label class="item item-input item-stacked-label">
+                        <span class="input-label formfont">Confirm New Password: </span>
+                        <input type="password" ng-model="new_password_2" placeholder="New Password" >
+                    </label>
+                </div>
+            </div>
+            <center> <button class="button  bstyle button-positive" ng-disabled="isDisabled" >Change Password</button></center><br>
+        </form>
+    </ion-content>
+</ion-view>
