@@ -150,7 +150,7 @@ angular.module('starter.controllers', ['signature', 'ngStorage'])
                     $scope.token = response.data.token;
                     $scope.cour.token = $scope.token;
                     $ionicLoading.hide();
-                    $window.location.href="#/app/create";
+                    $window.location.href="#/app/dashboard";
                 }
              }, function errorCallback(response) {
                 console.log(JSON.stringify(response));
@@ -163,18 +163,102 @@ angular.module('starter.controllers', ['signature', 'ngStorage'])
         }
 })
 
-//Create AWB
+//Dashboard
 .controller('DashboardCtrl',['$rootScope','$timeout','$scope','$http','$filter','$location','$window','courier', '$ionicHistory','$ionicSideMenuDelegate','$ionicLoading','$ionicPopup','$timeout','$state','$localStorage', function($rootScope,$timeout,$scope,$http,$filter,$location,$window,courier,$ionicHistory,$ionicSideMenuDelegate,$ionicLoading,$ionicPopup,$timeout,$state,$localStorage) {
 
     $scope.cour         = courier;
     $scope.token        = $scope.cour.token;
     $scope.username     = $scope.cour.username;
+    $scope.numpickups   = 0;
+    $scope.numdrops     = 0;
+
+    ///get userid and companydetails
+    $scope.userdetails_url = $scope.cour.url+'/user/rider/'+$scope.username+'?token='+$scope.token;
+    var username = {
+        username:   $scope.username
+    }
+    var config = {
+        headers : {
+            'Content-Type': 'application/json;'
+        }
+    }
+
+    if (localStorage.getItem("userdetails") === null)  {
+        $http.get($scope.userdetails_url, username, config).
+        then(function successCallback(response) {
+            console.log(JSON.stringify(response));
+
+            localStorage.setItem("userdetails", JSON.stringify(response.data));
+            $scope.userdetails = localStorage.getItem("userdetails");
+            console.log($scope.userdetails);
+
+            $scope.userid = response.data[0].id;
+            $scope.fullname = response.data[0].fullname;
+            $scope.companyname = response.data[0].name;
+            $scope.companyaddr = response.data[0].address;
+            $scope.companycity = response.data[0].city;
+            $scope.companyphone = response.data[0].phone;
+            $scope.companyemail = response.data[0].email;
+            $scope.cour.userid       = $scope.userid;
+            $scope.cour.fullname = $scope.fullname;
+            $scope.cour.companyname = $scope.companyname;
+            $scope.cour.companyaddr = $scope.companyaddr;
+            $scope.cour.companycity = $scope.companycity;
+            $scope.cour.companyphone = $scope.companyphone;
+            $scope.cour.companyemail = $scope.companyemail;
+        }, function errorCallback(response) {
+               console.log(JSON.stringify(response));
+        });
+    }
+    else {
+        $scope.userid = JSON.parse(localStorage.getItem("userdetails"))[0].id;
+        $scope.fullname = JSON.parse(localStorage.getItem("userdetails"))[0].fullname;
+        $scope.companyname = JSON.parse(localStorage.getItem("userdetails"))[0].name;
+        $scope.companyaddr = JSON.parse(localStorage.getItem("userdetails"))[0].address;
+        $scope.companycity = JSON.parse(localStorage.getItem("userdetails"))[0].city;
+        $scope.companyphone = JSON.parse(localStorage.getItem("userdetails"))[0].phone;
+        $scope.companyemail = JSON.parse(localStorage.getItem("userdetails"))[0].email;
+    }
+
+    //no of pending pickups
+    $scope.numpickups_url = $scope.cour.url+'/rider/txn/numberpickups?token='+$scope.token;
+    $http.get($scope.numpickups_url).
+    then(function successCallback(response) {
+        // console.log(JSON.stringify(response));
+        $scope.numpickups = response.data.txn;
+        // $scope.loading = false;
+        // $scope.dataLoaded = true;
+        if (response.data.txn.length == 0){
+            $scope.numpickups = 0;
+        }
+    }, function errorCallback(response) {
+           // console.log(JSON.stringify(response));
+           // $scope.loading = false;
+           // $scope.dataLoaded = false;
+    });
+
+    //no of pending drops
+    $scope.numdrops_url = $scope.cour.url+'/rider/txn/numberdrops?token='+$scope.token;
+    $http.get($scope.numdrops_url).
+    then(function successCallback(response) {
+        // console.log(JSON.stringify(response));
+        $scope.numdrops = response.data.txn;
+        // $scope.loading =false;
+        // $scope.dataLoaded = true;
+        if (response.data.txn.length == 0){
+            $scope.$scope.numdrops = 0;
+        }
+    }, function errorCallback(response) {
+           console.log(JSON.stringify(response));
+           // $scope.loading =false;
+           // $scope.dataLoaded = false;
+    });
     
     $scope.cancel = function(){
         $ionicHistory.nextViewOptions({
             disableBack: true
         });
-        $window.location.href="#/app/create";
+        $window.location.href="#/app/dashboard";
     }
 }])
 
@@ -212,7 +296,7 @@ angular.module('starter.controllers', ['signature', 'ngStorage'])
         $ionicHistory.nextViewOptions({
             disableBack: true
         });
-        $window.location.href="#/app/parcelmenu";
+        $window.location.href="#/app/dashboard";
         // $window.history.back();
     }
 }])
@@ -239,7 +323,7 @@ angular.module('starter.controllers', ['signature', 'ngStorage'])
         $ionicHistory.nextViewOptions({
             disableBack: true
         });
-        $window.location.href="#/app/parcelmenu";
+        $window.location.href="#/app/dashboard";
         // $window.history.back();
     }
 
