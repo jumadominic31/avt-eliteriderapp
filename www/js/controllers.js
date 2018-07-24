@@ -93,8 +93,8 @@ angular.module('starter.controllers', ['signature', 'ngStorage'])
     this.updated_by = "";
     this.statusdetails = "";
     this.selected = [];
-    // this.url           = "https://avanettech.co.ke/courier/api";
-    // this.sign_url      = "https://avanettech.co.ke/courier/"
+    // this.url           = "https://avanettech.co.ke/elite/api";
+    // this.sign_url      = "https://avanettech.co.ke/elite/"
     //this.url           = "http://10.0.2.2:8000/api";
     // this.url           = "http://192.168.0.106:8000/api";
     // this.sign_url           = "http://192.168.0.106:8000/";
@@ -171,6 +171,8 @@ angular.module('starter.controllers', ['signature', 'ngStorage'])
     $scope.username     = $scope.cour.username;
     $scope.numpickups   = 0;
     $scope.numdrops     = 0;
+    $scope.completedpickups = 0;
+    $scope.completeddrops   = 0;
 
     ///get userid and companydetails
     $scope.userdetails_url = $scope.cour.url+'/user/rider/'+$scope.username+'?token='+$scope.token;
@@ -252,6 +254,30 @@ angular.module('starter.controllers', ['signature', 'ngStorage'])
            console.log(JSON.stringify(response));
            // $scope.loading =false;
            // $scope.dataLoaded = false;
+    });
+
+    //no of pending pickups
+    $scope.completedpickups_url = $scope.cour.url+'/rider/txn/completedpickups?token='+$scope.token;
+    $http.get($scope.completedpickups_url).
+    then(function successCallback(response) {
+        $scope.completedpickups = response.data.txn;
+        if (response.data.txn.length == 0){
+            $scope.completedpickups = 0;
+        }
+    }, function errorCallback(response) {
+           console.log(JSON.stringify(response));
+    });
+
+    //no of pending drops
+    $scope.completeddrops_url = $scope.cour.url+'/rider/txn/completeddrops?token='+$scope.token;
+    $http.get($scope.completeddrops_url).
+    then(function successCallback(response) {
+        $scope.completeddrops = response.data.txn;
+        if (response.data.txn.length == 0){
+            $scope.$scope.completeddrops = 0;
+        }
+    }, function errorCallback(response) {
+           console.log(JSON.stringify(response));
     });
     
     $scope.cancel = function(){
@@ -710,7 +736,7 @@ angular.module('starter.controllers', ['signature', 'ngStorage'])
         $ionicHistory.nextViewOptions({
             disableBack: true
         });
-        $window.location.href="#/app/create";
+        $window.location.href="#/app/dashboard";
     }
 
 }])
@@ -774,7 +800,7 @@ angular.module('starter.controllers', ['signature', 'ngStorage'])
             $ionicHistory.nextViewOptions({
                 disableBack: true
             });
-            $window.location.href="#/app/create";
+            $window.location.href="#/app/dashboard";
         }
 
         $scope.print = function(){
@@ -806,7 +832,7 @@ angular.module('starter.controllers', ['signature', 'ngStorage'])
         $ionicHistory.nextViewOptions({
             disableBack: true
         });
-        $window.location.href="#/app/create";
+        $window.location.href="#/app/dashboard";
     }
 
     $scope.details = function(){
@@ -1037,7 +1063,7 @@ angular.module('starter.controllers', ['signature', 'ngStorage'])
         $ionicHistory.nextViewOptions({
             disableBack: true
         });
-        $window.location.href="#/app/create";
+        $window.location.href="#/app/dashboard";
     }
 
 }])
@@ -1187,7 +1213,7 @@ angular.module('starter.controllers', ['signature', 'ngStorage'])
                         $ionicHistory.nextViewOptions({
                             disableBack: true
                         });
-                        $window.location.href="#/app/listreceived";
+                        $window.location.href="#/app/dashboard";
                     }
                   }, function errorCallback(response) {
                       $scope.isDisabled   = false;
@@ -1209,7 +1235,7 @@ angular.module('starter.controllers', ['signature', 'ngStorage'])
         $ionicHistory.nextViewOptions({
             disableBack: true
         });
-        $window.location.href="#/app/create";
+        $window.location.href="#/app/dashboard";
     }
 
 }])
@@ -1224,8 +1250,8 @@ angular.module('starter.controllers', ['signature', 'ngStorage'])
     $scope.spinner1 = true;
     $scope.spinner2 = true;
     $scope.token = $scope.cour.token;
-    $scope.customers = JSON.parse(localStorage.getItem("customers"));
-    $scope.customers.push({id: 0, name: "Others"});
+    // $scope.customers = JSON.parse(localStorage.getItem("customers"));
+    // $scope.customers.push({id: 0, name: "Others"});
     
     $scope.cancel = function(){
         $ionicHistory.nextViewOptions({
@@ -1277,7 +1303,7 @@ angular.module('starter.controllers', ['signature', 'ngStorage'])
         $ionicHistory.nextViewOptions({
             disableBack: true
         });
-        $window.location.href="#/app/create";
+        $window.location.href="#/app/dashboard";
     }
 
     $scope.reset = function() {
@@ -1472,7 +1498,7 @@ angular.module('starter.controllers', ['signature', 'ngStorage'])
             $ionicHistory.nextViewOptions({
                 disableBack: true
             });
-            $window.location.href="#/app/create";
+            $window.location.href="#/app/dashboard";
         }
 
         $scope.print = function(){
