@@ -3,7 +3,8 @@
         <button class="button button-clear icon-left ion-home" ng-click="cancel()"></button>
     </ion-nav-buttons>
 	<ion-content>
-		<div class="list" >
+		<center><ion-spinner icon="android" ng-show="loading"></ion-spinner></center>
+		<div class="list" ng-if="dataLoaded">
 			<!-- <div class="item item-divider">
 				Parcels Menu
 			</div> -->

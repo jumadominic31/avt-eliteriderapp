@@ -93,13 +93,13 @@ angular.module('starter.controllers', ['signature', 'ngStorage'])
     this.updated_by = "";
     this.statusdetails = "";
     this.selected = [];
-    // this.url           = "https://avanettech.co.ke/elite/api";
-    // this.sign_url      = "https://avanettech.co.ke/elite/"
+    this.url           = "https://avanettech.co.ke/elite/api";
+    this.sign_url      = "https://avanettech.co.ke/elite/"
     //this.url           = "http://10.0.2.2:8000/api";
     // this.url           = "http://192.168.0.106:8000/api";
     // this.sign_url           = "http://192.168.0.106:8000/";
-    this.url           = "http://127.0.0.1:8000/api";
-    this.sign_url      = "http://127.0.0.1:8000/"
+    // this.url           = "http://127.0.0.1:8000/api";
+    // this.sign_url      = "http://127.0.0.1:8000/"
     this.token         = "";
 })
 
@@ -173,6 +173,8 @@ angular.module('starter.controllers', ['signature', 'ngStorage'])
     $scope.numdrops     = 0;
     $scope.completedpickups = 0;
     $scope.completeddrops   = 0;
+    $scope.loading = true;
+    $scope.dataLoaded = false;
 
     ///get userid and companydetails
     $scope.userdetails_url = $scope.cour.url+'/user/rider/'+$scope.username+'?token='+$scope.token;
@@ -224,61 +226,73 @@ angular.module('starter.controllers', ['signature', 'ngStorage'])
 
     //no of pending pickups
     $scope.numpickups_url = $scope.cour.url+'/rider/txn/numberpickups?token='+$scope.token;
-    $http.get($scope.numpickups_url).
-    then(function successCallback(response) {
-        // console.log(JSON.stringify(response));
-        $scope.numpickups = response.data.txn;
-        // $scope.loading = false;
-        // $scope.dataLoaded = true;
-        if (response.data.txn.length == 0){
-            $scope.numpickups = 0;
-        }
-    }, function errorCallback(response) {
-           // console.log(JSON.stringify(response));
-           // $scope.loading = false;
-           // $scope.dataLoaded = false;
-    });
+    $timeout( function () {
+        $http.get($scope.numpickups_url).
+        then(function successCallback(response) {
+            // console.log(JSON.stringify(response));
+            $scope.numpickups = response.data.txn;
+            // $scope.loading = false;
+            // $scope.dataLoaded = true;
+            if (response.data.txn.length == 0){
+                $scope.numpickups = 0;
+            }
+        }, function errorCallback(response) {
+               // console.log(JSON.stringify(response));
+               // $scope.loading = false;
+               // $scope.dataLoaded = false;
+        });
+    }, 500);
 
     //no of pending drops
     $scope.numdrops_url = $scope.cour.url+'/rider/txn/numberdrops?token='+$scope.token;
-    $http.get($scope.numdrops_url).
-    then(function successCallback(response) {
-        // console.log(JSON.stringify(response));
-        $scope.numdrops = response.data.txn;
-        // $scope.loading =false;
-        // $scope.dataLoaded = true;
-        if (response.data.txn.length == 0){
-            $scope.$scope.numdrops = 0;
-        }
-    }, function errorCallback(response) {
-           console.log(JSON.stringify(response));
-           // $scope.loading =false;
-           // $scope.dataLoaded = false;
-    });
+    $timeout( function () {
+        $http.get($scope.numdrops_url).
+        then(function successCallback(response) {
+            // console.log(JSON.stringify(response));
+            $scope.numdrops = response.data.txn;
+            // $scope.loading =false;
+            // $scope.dataLoaded = true;
+            if (response.data.txn.length == 0){
+                $scope.$scope.numdrops = 0;
+            }
+        }, function errorCallback(response) {
+               console.log(JSON.stringify(response));
+               // $scope.loading =false;
+               // $scope.dataLoaded = false;
+        });
+    }, 1000);
 
     //no of pending pickups
     $scope.completedpickups_url = $scope.cour.url+'/rider/txn/completedpickups?token='+$scope.token;
-    $http.get($scope.completedpickups_url).
-    then(function successCallback(response) {
-        $scope.completedpickups = response.data.txn;
-        if (response.data.txn.length == 0){
-            $scope.completedpickups = 0;
-        }
-    }, function errorCallback(response) {
-           console.log(JSON.stringify(response));
-    });
+    $timeout( function () {
+        $http.get($scope.completedpickups_url).
+        then(function successCallback(response) {
+            $scope.completedpickups = response.data.txn;
+            // $scope.loading =false;
+            // $scope.dataLoaded = true;
+            if (response.data.txn.length == 0){
+                $scope.completedpickups = 0;
+            }
+        }, function errorCallback(response) {
+               console.log(JSON.stringify(response));
+        });
+    }, 1500);
 
     //no of pending drops
     $scope.completeddrops_url = $scope.cour.url+'/rider/txn/completeddrops?token='+$scope.token;
-    $http.get($scope.completeddrops_url).
-    then(function successCallback(response) {
-        $scope.completeddrops = response.data.txn;
-        if (response.data.txn.length == 0){
-            $scope.$scope.completeddrops = 0;
-        }
-    }, function errorCallback(response) {
-           console.log(JSON.stringify(response));
-    });
+    $timeout( function () {
+        $http.get($scope.completeddrops_url).
+        then(function successCallback(response) {
+            $scope.completeddrops = response.data.txn;
+            $scope.loading =false;
+            $scope.dataLoaded = true;
+            if (response.data.txn.length == 0){
+                $scope.$scope.completeddrops = 0;
+            }
+        }, function errorCallback(response) {
+               console.log(JSON.stringify(response));
+        });
+    }, 2000);
     
     $scope.cancel = function(){
         $ionicHistory.nextViewOptions({
